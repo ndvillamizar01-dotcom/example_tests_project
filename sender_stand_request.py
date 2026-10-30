@@ -21,6 +21,13 @@ def post_products_kits(products_ids):
                          json=products_ids,
                          headers=data.headers)
 
-response = post_products_kits(data.product_ids)
-print(response.status_code)
-print(response.json())
+def post_new_client_kit(kit_body, auth_token):
+    # Hacemos una copia de los headers para no alterar el original y agregamos el token de autenticación
+    current_headers = data.headers.copy()
+    current_headers["Authorization"] = "Bearer " + auth_token
+
+    return requests.post(
+        configuration.URL_SERVICE + configuration.PRODUCTS_KITS_PATH,
+        json=kit_body,
+        headers=current_headers
+    )
